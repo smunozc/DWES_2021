@@ -27,7 +27,7 @@ public class PdfServlet extends javax.servlet.http.HttpServlet {
 		logger.info("Client has invoked GET operation [PdfServlet.class]");
 
 		response.setContentType("application/pdf;charset=UTF-8");
-		response.addHeader("Content-Disposition", "inline; filename=" + "user.pdf");
+		response.addHeader("Content-Disposition", "attachment; filename=" + "user.pdf");
 		ServletOutputStream out = response.getOutputStream();
 
 		HttpSession session = request.getSession();

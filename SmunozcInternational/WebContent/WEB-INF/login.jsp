@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.Date"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./styles/style.css">
-	<script src="js/checkLogin.js" type="text/javascript"></script>
 </head>
 <body>
 	<header>
@@ -23,7 +23,10 @@
             <input type="text" name="username" class="username" value="user1">
             <label for="password">Password:</label>
             <input type="password" name="password" class="password" value="user1">
-            <span class="status"></span>
+            
+            <c:set var = "auth" scope = "session" value = "${loginCorrect}"/>
+            <span class="status"><c:if test="${auth == false}"> Login incorrect </c:if></span>
+            
             <input class="btn" type="submit" value="Login" class="button" id="submitButton">
         </form>
     </main>

@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import model.User;
 
 public interface UserDAOI {
@@ -10,7 +12,7 @@ public interface UserDAOI {
 	 * @param user
 	 * @return boolean
 	 */
-	public boolean doLogin(User user);
+	public User doLogin(String username, String password);
 
 	/**
 	 * User register.
@@ -43,14 +45,11 @@ public interface UserDAOI {
 	 * @return
 	 */
 	public boolean hasDetailedData(User user);
-
+	
 	/**
-	 * Gets a user from the database with the User entered as a parameter, this User
-	 * only needs to have the username.
-	 * 
-	 * @param user
-	 * @return boolean
+	 * Gets all users from database.
+	 * @return List<User>
 	 */
-	public boolean getUserByUsername(User user);
+	public List<User> getAllUsers();
 
 }

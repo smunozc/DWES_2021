@@ -11,12 +11,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class FilterAuth
  */
-@WebFilter("/login")
+//@WebFilter()
 public class FilterAuth implements Filter {
 
 	/**
@@ -27,36 +27,18 @@ public class FilterAuth implements Filter {
 		try {
 			HttpServletRequest request = (HttpServletRequest) req;
 			HttpServletResponse response = (HttpServletResponse) res;
-	        HttpSession session = ((HttpServletRequest) request).getSession();
+	        //HttpSession session = ((HttpServletRequest) request).getSession();
 			
 			// URLs
-			String urlLogin = "/WEB-INF/login.jsp";
+			String urlLogin = "/login.jsp";
 			String urlLanding = request.getServletPath() + "/welcome.jsp";
 
-			// Check if there is a cookie with the name 'username' so login is not
-			// necessary.
-			Cookie[] cookies = request.getCookies();
-
-			boolean found = false;
-			int i = 0;
-
-			while (!found && i < cookies.length) {
-				if (cookies[i].getName().equals("username")) {
-					found = true;
-					response.sendRedirect(urlLanding);
-				} else {
-					i++;
-				}
-			}
-			if (!found) {
-				// TODO Fix error and do filter for users
-				request.getRequestDispatcher(urlLogin).forward(request, response);
-			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		chain.doFilter(req, res);
+		//chain.doFilter(req, res);
 	}
 
 	@Override

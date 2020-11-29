@@ -64,4 +64,24 @@ public class RegexValidator {
     	return NAME_PATTERN.matcher(name).matches();
     }
     
+    public boolean checkPhone(String phone) {
+    	return PHONE_PATTERN.matcher(phone).matches();
+    }
+    
+    public boolean checkEmail(String email) {
+    	return EMAIL_PATTERN.matcher(email).matches();
+    }
+    
+    public boolean checkPassword(String password) {
+    	return PASSWORD_PATTERN.matcher(password).matches();
+    }
+    
+    public boolean checkDate(String date) {
+    	return DATE_PATTERN.matcher(date).matches();
+    }
+    
+    public boolean checkCreditCard(String creditCardNumber) {
+    	return CREDIT_CARD_PATTERN.matcher(creditCardNumber).matches();
+    }
+    
 }

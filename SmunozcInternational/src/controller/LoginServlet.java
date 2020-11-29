@@ -28,11 +28,12 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 			throws ServletException, IOException {
 
 		logger.info("Client has invoked GET operation [LoginServlet.class]");
+		HttpSession session = request.getSession();
 
 		try {
 			// URLs
 			String urlLogin = "/WEB-INF/login.jsp";
-			String urlLanding = request.getServletPath() + "/welcome.jsp";
+			String urlLanding = request.getContextPath() + "/welcome.jsp";
 
 			// Check if there is a cookie with the name 'username' so login is not
 			// necessary.
@@ -44,13 +45,14 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 			while (!found && i < cookies.length) {
 				if (cookies[i].getName().equals("username")) {
 					found = true;
-					response.sendRedirect(urlLanding);
 				} else {
 					i++;
 				}
 			}
-			if (!found) {
-				getServletContext().getRequestDispatcher(urlLogin).forward(request, response);
+			if (found) {
+				response.sendRedirect(urlLanding);
+			} else {
+				request.getRequestDispatcher(urlLogin).forward(request, response);
 			}
 
 		} catch (Exception e) {
@@ -62,26 +64,30 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 			throws ServletException, IOException {
 
 		logger.info("Client has invoked POST operation [LoginServlet.class]");
+		HttpSession session = request.getSession();
 
 		// Username and Password
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		User user = new User(username, password);
 
 		// URLs
 		String urlLanding = request.getContextPath() + "/welcome.jsp";
 		String urlLogin = "/WEB-INF/login.jsp";
+		
+		//Boolean login correct on post
+		boolean loginCorrect = true;
 
 		try {
 			/**
 			 * If user and password are correct, the server will redirect to the landing
 			 * page after authentication, if not, it will redirect to login again.
 			 */
-			if (userDAO.doLogin(user)) {
+			User user = userDAO.doLogin(username, password);
+			
+			if (user != null) {
 
 				logger.info("Login correct! [LoginServlet.class]");
-
-				HttpSession session = request.getSession();
+				
 				session.setAttribute("user", user);
 
 				Cookie loginCookie = new Cookie("username", user.getUsername());
@@ -89,16 +95,18 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 				response.addCookie(loginCookie);
 				response.sendRedirect(urlLanding);
+				//request.getRequestDispatcher(urlLanding).forward(request, response);
 
 			} else {
 
 				logger.info("Login incorrect. [LoginServlet.class]");
-
-				response.setContentType("text/html; charset=UTF-8");
-				response.getWriter().write("Username or password are incorrect.");
-				getServletContext().getRequestDispatcher(urlLogin).forward(request, response);
+				loginCorrect = false;
+				
+				request.getRequestDispatcher(urlLogin).forward(request, response);
 
 			}
+			
+			session.setAttribute("loginCorrect", loginCorrect);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -29,15 +29,22 @@ public class User {
 		this.birthday = birthday;
 	}
 
+	public User(String username, String password, String type) {
+		this.username = username;
+		this.password = password;
+		this.type = type;
+	}
+	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.type = userType.REGULAR.getValue();
 	}
 
 	public User(String username) {
 		this.username = username;
 	}
+	
+	public User() {}
 
 	public String getUsername() {
 		return username;

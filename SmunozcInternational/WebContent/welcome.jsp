@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.Date"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,30 +20,7 @@
     </header>
     <main>
         <section class="sctn">
-            <%
-            
-            String username = (String) session.getAttribute("username");
-            boolean cookieExists = false;
-            //Cuando se inicia sesión, la vista muestra que no se ha encontrado cookie. Cuando se recarga si lo muestra.
-            Cookie[] cookies = request.getCookies();
-			for(int i=0;i<cookies.length;i++) {
-				if(cookies[i].getName().equals("username")) {
-					%>
-						<p>cookie for username <%=cookies[i].getValue()%> found</p>
-            			<h1>WELCOME <%=username%>!</h1>
-					<% 
-					cookieExists = true;
-					break;
-				}
-			}
-			if(!cookieExists){
-				%>
-					<p>cookie for username not found</p>
-				<% 
-			}
-            
-            
-            %>
+           <h1>WELCOME <c:out value="${ user.username }"></c:out>!</h1>
         </section>
         <section class="sctn">
         
