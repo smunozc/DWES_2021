@@ -14,8 +14,8 @@
 	<header>
         <h1>Bussiness Model</h1>
         <nav>
-            <a class="btn" href="<%=request.getContextPath()+"/"%>">Home</a>
-            <a class="btn" href="<%=request.getContextPath()+"/login"%>">Login</a>
+            <a class="btn" href="<%="/"%>">Home</a>
+            <a class="btn" href="<%="/login"%>">Login</a>
         </nav>
     </header>
     <main>

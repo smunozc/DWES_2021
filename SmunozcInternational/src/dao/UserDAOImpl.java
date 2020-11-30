@@ -352,7 +352,7 @@ public class UserDAOImpl implements UserDAOI {
 		}
 
 		if (con != null) {
-			String sql = "select * from userDetailedData where user = ?;";
+			String sql = "select user from userDetailedData where user = ?;";
 			PreparedStatement ps;
 
 			try {
@@ -405,24 +405,16 @@ public class UserDAOImpl implements UserDAOI {
 				ps = (PreparedStatement) con.prepareStatement(sql);
 				
 				ResultSet rs = ps.executeQuery();
-
-				if(!rs.next()) {
+				User user;
+				users = new ArrayList<User>();
 					
-					logger.info("Client does not have detailed information in the database. [UserDAOImpl.class]");
+				while (rs.next()) {
 					
-				} else {
+					user = new User(rs.getNString("user"), rs.getNString("password"),rs.getNString("userType"));
 					
-					logger.info("Client have detailed information in the database. [UserDAOImpl.class]");
+					users.add(user);
 					
-					while (rs.next()) {
-						
-						User user = new User(rs.getNString("user"), rs.getNString("password"),rs.getNString("userType"));
-						
-						users = new ArrayList<User>();
-						users.add(user);
-						
-					} 
-				}
+				} 
 				
 				
 				con.close();
@@ -434,6 +426,105 @@ public class UserDAOImpl implements UserDAOI {
 		}
 		
 		return users;
+	}
+
+	@Override
+	public boolean updateUserData(User user) {
+		logger.info("Client invoked method to login [UserDAOImpl.class]");
+
+		Connection con = null;
+		boolean result = false;
+
+		try {
+
+			con = ((BasicDataSource) ((new InitialContext()).lookup("java:/comp/env/jdbc/mariaDBConnection")))
+					.getConnection();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException ne) {
+			ne.printStackTrace();
+		}
+
+		if (con != null) {
+
+			String sql = "SELECT * FROM users WHERE user LIKE ?";
+			PreparedStatement ps;
+
+			try {
+
+				ps = (PreparedStatement) con.prepareStatement(sql);
+				ps.setString(1, user.getUsername());
+
+				ResultSet rs = ps.executeQuery();
+
+				if (rs.next()) {
+					String hashedPassword = rs.getNString("password");
+
+					if (BCrypt.checkpw(user.getPassword(), hashedPassword)) {
+						
+						//Update user
+						sql = "UPDATE users SET userType = ? WHERE user = ?";
+						ps = (PreparedStatement) con.prepareStatement(sql);
+						ps.setString(1, user.getType());
+						ps.setString(2, user.getUsername());
+						
+						result = true;
+						
+						//Update userData
+						sql = "UPDATE userData SET name=?, surname=?, email=?, birthday=? where user = ?;";
+						ps = (PreparedStatement) con.prepareStatement(sql);
+						ps.setString(1, user.getName());
+						ps.setString(2, user.getSurname());
+						ps.setString(3, user.getEmail());
+						ps.setString(4, user.getBirthday());
+						ps.setString(5, user.getUsername());
+
+						rs = ps.executeQuery();
+						if (rs.next()) {
+							logger.info("The user data has been updated succesfully [UserDAOImpl.class]");
+						} else {
+							logger.info("The username does not have data [UserDAOImpl.class]");
+						}
+						
+						//Get userDetailedData
+						sql = "UPDATE userData SET nif=?, weight=?, height=?, academicFormation=?, hobbies=? where user = ?;";
+						ps = (PreparedStatement) con.prepareStatement(sql);
+						
+						ps.setString(1, user.getNif());
+						ps.setString(2, user.getWeight());
+						ps.setString(3, user.getHeight());
+						ps.setString(4, user.getAcademicFormation());
+						ps.setString(5, user.getHobbies());
+						ps.setString(6, user.getUsername());
+
+						rs = ps.executeQuery();
+						if (rs.next()) {
+							logger.info("The user detailed data has been updated succesfully [UserDAOImpl.class]");
+						} else {
+							logger.info("The username does not have detailed data [UserDAOImpl.class]");
+						}
+						
+
+					} else {
+
+						logger.info("Client tried to update data but the password is incorrect");
+
+					}
+
+				} else {
+
+					logger.info("Client tried to update data but the user was not found");
+
+				}
+
+			} catch (SQLException e) {
+				logger.error("Client tried to update data but connection to database failed");
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 
 }

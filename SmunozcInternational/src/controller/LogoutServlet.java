@@ -25,7 +25,7 @@ public class LogoutServlet extends javax.servlet.http.HttpServlet {
 
 		// URLs
 		String urlWelcome = "/welcome.jsp";
-		String urlLanding = request.getContextPath();
+		String urlLanding = "";
 
 		try {
 
@@ -46,7 +46,8 @@ public class LogoutServlet extends javax.servlet.http.HttpServlet {
 			// Invalidate session
 			session.invalidate();
 
-			response.sendRedirect(urlLanding);
+			//response.sendRedirect(urlLanding);
+			request.getRequestDispatcher(urlLanding).forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -51,5 +51,11 @@ public interface UserDAOI {
 	 * @return List<User>
 	 */
 	public List<User> getAllUsers();
+	
+	/**
+	 * Updates the user information in the database.
+	 * @return boolean
+	 */
+	public boolean updateUserData(User user);
 
 }

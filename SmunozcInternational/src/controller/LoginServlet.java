@@ -33,7 +33,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 		try {
 			// URLs
 			String urlLogin = "/WEB-INF/login.jsp";
-			String urlLanding = request.getContextPath() + "/welcome.jsp";
+			String urlLanding = "/welcome";
 
 			// Check if there is a cookie with the name 'username' so login is not
 			// necessary.
@@ -50,7 +50,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 				}
 			}
 			if (found) {
-				response.sendRedirect(urlLanding);
+				request.getRequestDispatcher(urlLanding).forward(request, response);
 			} else {
 				request.getRequestDispatcher(urlLogin).forward(request, response);
 			}
@@ -71,7 +71,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 		String password = request.getParameter("password");
 
 		// URLs
-		String urlLanding = request.getContextPath() + "/welcome.jsp";
+		String urlLanding = request.getContextPath() + "/welcome";
 		String urlLogin = "/WEB-INF/login.jsp";
 		
 		//Boolean login correct on post

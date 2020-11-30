@@ -31,7 +31,7 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
 
 		try {
 
-			getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
 		// URLs
 		String urlLanding = "/WEB-INF/login.jsp";
 		String urlRegister = "/WEB-INF/register.jsp";
-		String urlInvalidRegister = "/WEB-INF/invalidRegister.jsp";
+		//String urlInvalidRegister = "/WEB-INF/invalidRegister.jsp";
 
 		try {
 			/**
@@ -66,14 +66,14 @@ public class RegisterServlet extends javax.servlet.http.HttpServlet {
 			 */
 			if (validator.checkUsername(username) && validator.checkName(name)) {
 				if (userDAO.doRegister(user)) {
-					getServletContext().getRequestDispatcher(urlLanding).forward(request, response);
+					request.getRequestDispatcher(urlLanding).forward(request, response);
 				} else {
-					getServletContext().getRequestDispatcher(urlRegister).forward(request, response);
+					request.getRequestDispatcher(urlRegister).forward(request, response);
 				}
 			} else {
 				logger.error("Form of data is invalid");
-				getServletContext().getRequestDispatcher(urlInvalidRegister).include(request, response);
-				getServletContext().getRequestDispatcher(urlRegister).forward(request, response);
+				//request.getRequestDispatcher(urlInvalidRegister).include(request, response);
+				request.getRequestDispatcher(urlRegister).forward(request, response);
 			}
 
 		} catch (Exception e) {
