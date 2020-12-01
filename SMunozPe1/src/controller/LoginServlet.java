@@ -41,19 +41,30 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 			boolean found = false;
 			int i = 0;
-
-			while (!found && i < cookies.length) {
-				if (cookies[i].getName().equals("username")) {
-					found = true;
-				} else {
-					i++;
+			if(cookies!=null) {
+				
+				while (!found && i < cookies.length) {
+					
+					if (cookies[i].getName().equals("username")) {
+						found = true;
+					} else {
+						i++;
+					}
+					
 				}
-			}
-			if (found) {
-				request.getRequestDispatcher(urlLanding).forward(request, response);
+				
+				if (found) {
+					request.getRequestDispatcher(urlLanding).forward(request, response);
+				} else {
+					request.getRequestDispatcher(urlLogin).forward(request, response);
+				}
+				
 			} else {
+				
 				request.getRequestDispatcher(urlLogin).forward(request, response);
+				
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
