@@ -1,0 +1,97 @@
+2021-01-12 12:44:23 INFO  Version:46 - HHH000412: Hibernate Core {5.3.7.Final}
+2021-01-12 12:44:23 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2021-01-12 12:44:23 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2021-01-12 12:44:23 WARN  pooling:73 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2021-01-12 12:44:23 INFO  pooling:129 - HHH10001005: using driver [org.mariadb.jdbc.Driver] at URL [jdbc:mariadb://172.18.0.2:3306/universitylibrary?createDatabaseIfNotExist=true]
+2021-01-12 12:44:23 INFO  pooling:138 - HHH10001001: Connection properties: {password=****, user=root}
+2021-01-12 12:44:23 INFO  pooling:143 - HHH10001003: Autocommit mode: false
+2021-01-12 12:44:23 INFO  DriverManagerConnectionProviderImpl:281 - HHH000115: Hibernate connection pool size: 25 (min=1)
+2021-01-12 12:44:23 INFO  Dialect:157 - HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2021-01-12 12:44:24 DEBUG SQL:94 - alter table book drop foreign key if exists FK8ik6mo7lcgguka7gglqr88in1
+2021-01-12 12:44:24 INFO  access:47 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@67de7a99] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-01-12 12:44:24 WARN  ExceptionHandlerLoggedImpl:27 - GenerationTarget encountered exception accepting command : Error executing DDL "alter table book drop foreign key if exists FK8ik6mo7lcgguka7gglqr88in1" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table book drop foreign key if exists FK8ik6mo7lcgguka7gglqr88in1" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:375)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:359)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:331)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:230)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:154)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:126)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:144)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:72)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:310)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:467)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:708)
+	at org.iesalixar.daw2.helper.HibernateUtil.buildSessionFactory(HibernateUtil.java:27)
+	at org.iesalixar.daw2.main.Main.main(Main.java:49)
+Caused by: java.sql.SQLSyntaxErrorException: (conn=8) Table 'universitylibrary.book' doesn't exist
+	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
+	at org.mariadb.jdbc.internal.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:153)
+	at org.mariadb.jdbc.MariaDbStatement.executeExceptionEpilogue(MariaDbStatement.java:274)
+	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:363)
+	at org.mariadb.jdbc.MariaDbStatement.execute(MariaDbStatement.java:501)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 14 more
+Caused by: org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException: Table 'universitylibrary.book' doesn't exist
+	at org.mariadb.jdbc.internal.util.exceptions.MariaDbSqlException.of(MariaDbSqlException.java:34)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.exceptionWithQuery(AbstractQueryProtocol.java:194)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:262)
+	at org.mariadb.jdbc.MariaDbStatement.executeInternal(MariaDbStatement.java:357)
+	... 16 more
+Caused by: java.sql.SQLException: Table 'universitylibrary.book' doesn't exist
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readErrorPacket(AbstractQueryProtocol.java:1688)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.readPacket(AbstractQueryProtocol.java:1550)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.getResult(AbstractQueryProtocol.java:1513)
+	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:256)
+	... 17 more
+2021-01-12 12:44:24 DEBUG SQL:94 - drop table if exists book
+2021-01-12 12:44:24 DEBUG SQL:94 - drop table if exists student
+2021-01-12 12:44:24 DEBUG SQL:94 - create table book (id integer not null auto_increment, author varchar(255), isbn varchar(255), title varchar(255), year integer, student_id integer not null, primary key (id)) engine=InnoDB
+2021-01-12 12:44:24 INFO  access:47 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@2ef0dd86] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-01-12 12:44:24 DEBUG SQL:94 - create table student (id integer not null, birthyear integer, course varchar(255), name varchar(255), nid integer, surnames varchar(255), primary key (id)) engine=InnoDB
+2021-01-12 12:44:24 DEBUG SQL:94 - alter table book add constraint FK8ik6mo7lcgguka7gglqr88in1 foreign key (student_id) references student (id)
+2021-01-12 12:44:24 INFO  SchemaCreatorImpl:489 - HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@869d87c'
+2021-01-12 12:44:24 DEBUG SQL:94 - insert into student (birthyear, course, name, nid, surnames, id) values (?, ?, ?, ?, ?, ?)
+2021-01-12 12:44:24 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-01-12 12:44:24 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-01-12 12:44:24 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-01-12 12:44:24 WARN  ThreadLocalSessionContext:202 - HHH000002: Already session bound on call to bind(); make sure you clean up your sessions!
+2021-01-12 12:44:25 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory
+2021-01-12 12:44:25 DEBUG SQL:94 - select student0_.id as id1_1_, student0_.birthyear as birthyea2_1_, student0_.course as course3_1_, student0_.name as name4_1_, student0_.nid as nid5_1_, student0_.surnames as surnames6_1_ from student student0_
+2021-01-12 12:44:25 DEBUG SQL:94 - select books0_.student_id as student_6_0_0_, books0_.id as id1_0_0_, books0_.id as id1_0_1_, books0_.author as author2_0_1_, books0_.isbn as isbn3_0_1_, books0_.student_id as student_6_0_1_, books0_.title as title4_0_1_, books0_.year as year5_0_1_ from book books0_ where books0_.student_id=?
+2021-02-13 18:26:41 INFO  Version:46 - HHH000412: Hibernate Core {5.3.7.Final}
+2021-02-13 18:26:41 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2021-02-13 18:26:42 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2021-02-13 18:26:42 WARN  pooling:73 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2021-02-13 18:26:42 INFO  pooling:129 - HHH10001005: using driver [org.mariadb.jdbc.Driver] at URL [jdbc:mariadb://172.17.0.2:3310/universitylibrary?createDatabaseIfNotExist=true]
+2021-02-13 18:26:42 INFO  pooling:138 - HHH10001001: Connection properties: {password=****, user=root}
+2021-02-13 18:26:42 INFO  pooling:143 - HHH10001003: Autocommit mode: false
+2021-02-13 18:26:42 INFO  DriverManagerConnectionProviderImpl:281 - HHH000115: Hibernate connection pool size: 25 (min=1)
+2021-02-13 18:26:42 WARN  JdbcEnvironmentInitiator:132 - HHH000342: Could not obtain connection to query metadata : null
+2021-02-13 18:26:42 INFO  Dialect:157 - HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2021-02-13 18:26:42 INFO  LobCreatorBuilderImpl:63 - HHH000422: Disabling contextual LOB creation as connection was null
+2021-02-13 18:26:42 WARN  SqlExceptionHelper:137 - SQL Error: -1, SQLState: 08000
+2021-02-13 18:26:42 ERROR SqlExceptionHelper:142 - Could not connect to address=(host=172.17.0.2)(port=3310)(type=master) : Socket fail to connect to host:172.17.0.2, port:3310. Conexión rehusada (Connection refused)
+2021-02-13 18:27:30 INFO  Version:46 - HHH000412: Hibernate Core {5.3.7.Final}
+2021-02-13 18:27:30 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2021-02-13 18:27:31 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2021-02-13 18:27:31 WARN  pooling:73 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2021-02-13 18:27:31 INFO  pooling:129 - HHH10001005: using driver [org.mariadb.jdbc.Driver] at URL [jdbc:mariadb://localhost:3310/universitylibrary?createDatabaseIfNotExist=true]
+2021-02-13 18:27:31 INFO  pooling:138 - HHH10001001: Connection properties: {password=****, user=root}
+2021-02-13 18:27:31 INFO  pooling:143 - HHH10001003: Autocommit mode: false
+2021-02-13 18:27:31 INFO  DriverManagerConnectionProviderImpl:281 - HHH000115: Hibernate connection pool size: 25 (min=1)
+2021-02-13 18:27:31 INFO  Dialect:157 - HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2021-02-13 18:27:32 INFO  access:47 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@a22c4d8] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-13 18:27:32 DEBUG SQL:94 - create table book (id integer not null auto_increment, author varchar(255), isbn varchar(255), title varchar(255), year integer, student_id integer not null, primary key (id)) engine=InnoDB
+2021-02-13 18:27:33 DEBUG SQL:94 - create table student (id integer not null, birthyear integer, course varchar(255), name varchar(255), nid integer, surnames varchar(255), primary key (id)) engine=InnoDB
+2021-02-13 18:27:33 DEBUG SQL:94 - alter table book add constraint FK8ik6mo7lcgguka7gglqr88in1 foreign key (student_id) references student (id)
+2021-02-13 18:27:34 DEBUG SQL:94 - insert into student (birthyear, course, name, nid, surnames, id) values (?, ?, ?, ?, ?, ?)
+2021-02-13 18:27:34 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-02-13 18:27:34 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-02-13 18:27:34 DEBUG SQL:94 - insert into book (author, isbn, student_id, title, year) values (?, ?, ?, ?, ?)
+2021-02-13 18:27:34 WARN  ThreadLocalSessionContext:202 - HHH000002: Already session bound on call to bind(); make sure you clean up your sessions!
+2021-02-13 18:27:34 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory
+2021-02-13 18:27:34 DEBUG SQL:94 - select student0_.id as id1_1_, student0_.birthyear as birthyea2_1_, student0_.course as course3_1_, student0_.name as name4_1_, student0_.nid as nid5_1_, student0_.surnames as surnames6_1_ from student student0_
+2021-02-13 18:27:34 DEBUG SQL:94 - select books0_.student_id as student_6_0_0_, books0_.id as id1_0_0_, books0_.id as id1_0_1_, books0_.author as author2_0_1_, books0_.isbn as isbn3_0_1_, books0_.student_id as student_6_0_1_, books0_.title as title4_0_1_, books0_.year as year5_0_1_ from book books0_ where books0_.student_id=?
